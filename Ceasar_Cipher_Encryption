@@ -1,25 +1,46 @@
-# Overview
-The program allows users to encrypt a given string by shifting each letter by a fixed number of positions in the alphabet. It handles both uppercase and lowercase letters while maintaining the case of the characters in the output. Non-alphabetic characters (symbols, numbers, spaces, etc.) remain unchanged in the encrypted text.
+//Ceasar Cipher Encryption.. 
 
-# How to Use
-Running the Program
-Clone or download this repository to your local machine.
-Open the project in your preferred Java development environment or compile the Caesar_Cipher_Encryption.java file.
-Run the program.
-Enter the string you want to encrypt when prompted.
-The program encrypts the input string using the Caesar Cipher technique with a fixed shift of 3 and displays the encrypted result.
+import java.util.Scanner;
 
-# Example
-Suppose you want to encrypt the string Hello, World!. Upon running the program, after providing this string as input, the program will output Encrypted: Khoor, Zruog! as the encrypted text.
+public class Caesar_Cipher_Encryption 
+{
+    public static String encrypt(String plainText, int shift) 
+    {
+        StringBuilder encryptedText = new StringBuilder();
 
-# Usage Notes
-The program uses the Scanner class to take user input for the string to be encrypted.
-The default shift value is set to 3 for the Caesar Cipher encryption. You can modify the shift variable in the code to change the encryption strength.
-Feel free to experiment with different strings and shift values to observe the encryption process using the Caesar Cipher.
+        for (char c : plainText.toCharArray()) 
+        {
+            if (Character.isUpperCase(c)) // Captial letters will be shifted accordinly
+            {
+                char shiftedChar = (char) (((c - 'A' + shift) % 26) + 'A');
+                encryptedText.append(shiftedChar);
+            } 
+            
+            else if (Character.isLowerCase(c)) // Small letters will be shifted accordingly
+            {
+                char shiftedChar = (char) (((c - 'a' + shift) % 26) + 'a');
+                encryptedText.append(shiftedChar);
+            } 
+            
+            else // If there is any input other than letters then it would remain the same
+            {
+                encryptedText.append(c);
+            }
+        }
 
-# Contribution
-Contributions are welcome! If you have suggestions, improvements, or want to add features to this program, feel free to create a pull request or open an issue.
+        return encryptedText.toString();
+    }
 
-# License
-This project is licensed under the MIT License.
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter the string that has to be encrypted: ");
+        String text = sc.next();
+        
+        int shift = 3; // For Ceasar Cipher the key will be 3
 
+        String encrypted = encrypt(text, shift);
+        System.out.println("Encrypted: " + encrypted);
+    }
+}
